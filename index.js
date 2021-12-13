@@ -3,6 +3,13 @@ const app = express();
 const port = 8000;
 const expressLayouts = require("express-ejs-layouts");
 
+//setting up static files folder
+app.use(express.static("./assets"));
+
+//for individual pages styling
+app.set("layout extractStyles", true);
+app.set("layout extractScripts", true);
+
 // specifying that we need express layouts for the layout.ejs
 app.use(expressLayouts);
 
