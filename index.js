@@ -8,6 +8,7 @@ const passportLocal = require('./config/passport-local-strategy');
 const cookieParser = require('cookie-parser')
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
+const mongoStore = require('connect-mongo');
 
 
 //for reading the post requests
@@ -33,6 +34,7 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 
 // using the express session 
+// using mongostore to store session in database for persistent storage
 app.use(session({
   name: 'social media',
   //this is the encryption key
@@ -41,7 +43,10 @@ app.use(session({
   resave: false,
   cookie:{
     maxAge: (1000*60*100)
-  }
+  },
+  store: mongoStore.create({
+    mongoUrl: 'mongodb://localhost/socialmedia_development'
+  })
 }));
 // tell to use passport
 app.use(passport.initialize());
