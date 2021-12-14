@@ -6,5 +6,6 @@ const homeController = require("../controllers/home_controller");
 router.get("/", homeController.home);
 // any request to /users .USE to users.js route file
 router.use("/users", require("./users"));
+router.use('/posts',require('./posts'));
 
 module.exports = router;
