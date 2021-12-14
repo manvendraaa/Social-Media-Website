@@ -7,15 +7,25 @@ module.exports.profile = (req, res) => {
 };
 
 module.exports.signIn = (req,res) => {
+  if(req.isAuthenticated()){
+    return res.redirect('/users/profile');
+  }
+
   return res.render('user_sign_in');
 }
 
 module.exports.signUp = (req,res) => {
+  if(req.isAuthenticated()){
+    return res.redirect('/users/profile');
+  }
+
   return res.render('user_sign_up');
 }
 
 // sign up form action
 module.exports.create = function(req, res){
+  
+
   if (req.body.password != req.body.confirm_password){
       return res.redirect('back');
   }
@@ -37,5 +47,5 @@ module.exports.create = function(req, res){
 }
 // sign in form action
 module.exports.createSession = (req,res)=>{
-  // todo later
+  return res.redirect('/');
 }
