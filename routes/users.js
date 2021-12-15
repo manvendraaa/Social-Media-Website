@@ -4,7 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 
 //show profile only when authenticated user
-router.get("/profile",passport.checkAuthentication, usersController.profile);
+router.get("/profile/:id",passport.checkAuthentication, usersController.profile);
 router.get('/sign-in',usersController.signIn);
 router.get('/sign-up',usersController.signUp);
 router.get('/sign-out',usersController.destroySession);
