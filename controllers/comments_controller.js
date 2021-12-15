@@ -18,3 +18,11 @@ module.exports.create = (req,res)=>{
         }
     } )
 }
+
+module.exports.destroy = (req,res)=>{
+    Comment.findById({req.params.id},(err,comment)=>{
+        if(comment.user == req.user.id){
+            
+        }
+    })
+}
