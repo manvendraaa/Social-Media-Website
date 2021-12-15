@@ -10,7 +10,16 @@ module.exports.home = (req, res) => {
   //   });
   // })
   // populate the user of each post
-  Post.find({}).populate('user').exec((err,posts)=>{
+  // for nesting populate like in comments below is the implementation
+  Post.find({})
+  .populate('user')
+  .populate({
+    path: 'comments',
+    populate: {
+      path: 'user'
+    }
+  })
+  .exec((err,posts)=>{
     return res.render("home", {
       title: "Home",
       posts: posts
