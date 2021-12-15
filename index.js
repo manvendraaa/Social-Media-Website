@@ -9,6 +9,8 @@ const cookieParser = require('cookie-parser')
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
 const mongoStore = require('connect-mongo');
+const flash = require('connect-flash');
+const flashMiddleware = require('./config/flash-middleware');
 
 
 //for reading the post requests
@@ -55,6 +57,9 @@ app.use(passport.session());
 // for setting the authenticated user for the routes views
 app.use(passport.setAuthenticatedUser);
 
+// for notifications
+app.use(flash());
+app.use(flashMiddleware.setFlash);
 // use express router
 app.use("/", require("./routes/index"));
 
