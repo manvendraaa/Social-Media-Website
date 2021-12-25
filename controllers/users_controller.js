@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = (req, res) => {
   User.findById(req.params.id,(err,user)=>{
@@ -36,6 +38,12 @@ module.exports.update = async (req,res)=>{
         // first check if file uploaded
         console.log(req.file);
         if(req.file){
+          // if file already exists then delete it so that uploads are not too many
+          // if(user.avatar){
+          //   //user.avatar contains file path only from the uploads folder
+          //   fs.unlinkSync(path.join(__dirname, '..',user.avatar))
+          // }
+
           //from static
           user.avatar = User.avatarPath + '/' + req.file.filename;
         }
