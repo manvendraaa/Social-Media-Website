@@ -22,6 +22,8 @@ app.use(cookieParser());
 
 //setting up static files folder
 app.use(express.static("./assets"));
+//make the uploads path available to the browser
+app.use('/uploads',express.static(__dirname+'/uploads'))
 
 //for individual pages styling
 app.set("layout extractStyles", true);
