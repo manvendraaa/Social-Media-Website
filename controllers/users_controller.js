@@ -10,16 +10,50 @@ module.exports.profile = (req, res) => {
   
 };
 
-module.exports.update = (req,res)=>{
+module.exports.update = async (req,res)=>{
+  // if(req.user.id == req.params.id){
+  //   User.findByIdAndUpdate(req.params.id,req.body, function(err,user){
+  //     console.log('update run');
+  //     return res.redirect('back');
+  //   });
+  // }else{
+  //     return res.status(401).send('Unauthorized');
+  //   }
+
+  //converting to async await
   if(req.user.id == req.params.id){
-    User.findByIdAndUpdate(req.params.id,req.body, function(err,user){
-      console.log('update run');
+    
+    try{
+      // find user
+      let user = await User.findById(req.params.id);
+      // since the form is of type multipart we cannot simply read form data so multer is again used
+      User.uploadedAvatar(req,res,function(err) {
+        if(err)console.log('error in uploaded Avatar'+err);
+        // this function was made static so that available to use everywhere
+        // the req and res in multer are used 
+        user.name = req.body.name;
+        user.email = req.body.email;
+        // first check if file uploaded
+        console.log(req.file);
+        if(req.file){
+          //from static
+          user.avatar = User.avatarPath + '/' + req.file.filename;
+        }
+        user.save();
+        return res.redirect('back')
+        
+      })
+
+    }catch(err){
       return res.redirect('back');
-    });
+    }
+
+
+
   }else{
       return res.status(401).send('Unauthorized');
     }
-  
+
 }
 
 
