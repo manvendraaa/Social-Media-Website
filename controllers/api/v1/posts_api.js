@@ -18,22 +18,29 @@ module.exports.index = async function(req,res) {
     })
 };
 
-module.exports.destroy = (req,res)=>{
-    Post.findById(req.params.id,(err,post)=>{
-        //.id means converting the Object ID into string
-        // if(post.user == req.user.id){
-        if(err){
-            return res.json(500, {
-                message: "internal server error"
+module.exports.destroy = async (req,res)=>{
+
+    try{
+        let post = await Post.findById(req.params.id);
+        if(post.user == req.user.id){
+            post.remove();
+
+            await Comment.deleteMany({post: req.params.id});
+            return res.json(200, {
+                message: "post and comments deleted"
+            });
+                
+        }
+        else{
+            return res.json (400, {
+                message: "you cannot delete this post"
             })
         }
+        
 
-        post.remove();
-
-        Comment.deleteMany({post: req.params.id}, (err)=>{
-            res.json(200, {
-                message: "post and comments deleted"
-            })
+    }catch(err){
+        return res.json(500, {
+            message: "internal server error"
         })
-    })
+    }
 }
