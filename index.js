@@ -5,6 +5,7 @@ const port = 8000;
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
 const cookieParser = require('cookie-parser')
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
