@@ -12,7 +12,7 @@ const db = require("./config/mongoose");
 const mongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const flashMiddleware = require('./config/flash-middleware');
-
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
 //for reading the post requests
 app.use(express.urlencoded({extended: true}));
